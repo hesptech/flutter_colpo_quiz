@@ -14,6 +14,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
   int score = 0;
   int correctAnswers = 0;
   int wrongAnswers = 0;
+  int scoreFinal = 0;
 
   final List<Map<String, Object>> question = [
     {
@@ -55,6 +56,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
   ];
 
   void _answerQuestion(int score) {
+    scoreFinal += score;
     if (score == 1) {
       correctAnswers++;
     } else {
@@ -69,7 +71,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
         context, MaterialPageRoute(
           builder: (context) => ScoreScreen(
             name: widget.name,
-            score: score,
+            score: scoreFinal,
             correctAnswers: correctAnswers,
             wrongAnswers: wrongAnswers
           )
@@ -94,11 +96,11 @@ class _QuestionScreenState extends State<QuestionScreen> {
                   ),
                   ...(question[questionIndex]['answers'] as List<Map<String, Object>>)
                       .map((answer) {
-                    return ElevatedButton(
-                      onPressed: () => _answerQuestion(answer['score'] as int),
-                      child: Text(answer['text'] as String),
-                    );
-                  }).toList(),
+                        return ElevatedButton(
+                          onPressed: () => _answerQuestion(answer['score'] as int),
+                          child: Text(answer['text'] as String),
+                        );
+                      }).toList(),
                 ],
               ),
           )
